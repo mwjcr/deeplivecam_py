@@ -1,0 +1,59 @@
+name: Generate SBOM Vu FYP
+
+# Trigger the workflow on every push event to the main branch
+on: push
+
+
+jobs:
+  generate-reports:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Setup Node.js environment (cdxgen is a Node.js tool)
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'  # Use the required Node.js version
+
+      # Step 3: Install cdxgen globally
+      - name: Install cdxgen
+        run: npm install -g @cyclonedx/cdxgen
+
+      # Step 4: Generate the SBOM
+      - name: Generate SBOM
+        run: cdxgen -o sbom_cdxgen.json  # Generate the SBOM file in JSON format
+        
+   
+          
+
+     # Step 5: Upload the SBOM file as an artifact
+      - name: Upload SBOM as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SBOM Report
+          path: sbom_cdxgen.json   # Path to the SBOM file to be uploaded as an artifact
+
+      # Step: Install Grype
+      - name: Install Grype
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+          
+
+      # Step: Run Grype scan and generate vulnerability report
+      - name: Generate Vulnerability Report
+        run: |
+         grype dir:./ --output JSON > vulnerability_report.json
+         grype dir:./ --output table --fail-on low
+        continue-on-error: true
+        
+
+      # Step 9: Upload Vulnerability Report as an artifact
+      - name: Upload Vulnerability Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Vulnerability Report
+          path: vulnerability_report.json # Adjusted the path to match Dependency-Check's default output filename
