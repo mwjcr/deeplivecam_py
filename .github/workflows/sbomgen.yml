@@ -1,0 +1,16 @@
+name: CyBeats
+on: push
+jobs: 
+  sbomgen:
+    runs-on: ubuntu-latest
+  
+    steps:
+    # checkout branch
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: Install Tool
+        run: pip install cyclonedx-bom
+
+      - name: Generate SBOM
+        run: cyclonedx-py -e --format json -o sbomgen.json
