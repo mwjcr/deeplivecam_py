@@ -28,6 +28,7 @@ jobs:
           output-format: table
 
       - name: Scan SBOM #grype scan SBOM
+        if: always() # run even if scan fails
         uses: anchore/scan-action@v5
         with:
           sbom: "spdx_syft.json"
