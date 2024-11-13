@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Tool
-        run: pip install cyclonedx-bom
+        run: pip install jake
 
       - name: Generate SBOM
-        run: cyclonedx-py -environment -o sbomgen.json
+        run: jake sbom --output-format json -o sbomgen.json
