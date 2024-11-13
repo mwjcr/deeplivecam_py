@@ -27,16 +27,15 @@ jobs:
           severity-cutoff: "low"
           output-format: table
 
-      - name: Scan SBOM and output JSON technical scan report
+      - name: Scan SBOM #grype scan SBOM
         uses: anchore/scan-action@v5
-        if: always() # run even if scan fails
         with:
           sbom: "spdx_syft.json"
           severity-cutoff: "low"
 
-      - name: View and Save Technical Scan Report #save scan report to a file
+      - name: View and Save Scan Report #save scan report to a file
         if: always() # run even if scan fails
-        run: |
+        run: | 
           cat '${{ steps.scan.outputs.sarif }}'
           cp '${{ steps.scan.outputs.sarif }}' grype_syft_report.sarif
       
