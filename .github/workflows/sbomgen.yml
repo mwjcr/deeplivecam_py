@@ -14,3 +14,6 @@ jobs:
 
       - name: Generate SBOM
         run: jake sbom --output-format json -o sbomgen.json
+        
+      - name: Read SBOM
+        run: cat sbomgen.json
