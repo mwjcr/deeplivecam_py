@@ -13,4 +13,4 @@ jobs:
         run: pip install cyclonedx-bom
 
       - name: Generate SBOM
-        run: cyclonedx-py -environment --format json -o sbomgen.json
+        run: cyclonedx-py -environment -o sbomgen.json
