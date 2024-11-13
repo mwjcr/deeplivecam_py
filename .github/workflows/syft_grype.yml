@@ -29,6 +29,7 @@ jobs:
 
       - name: Scan SBOM and output JSON technical scan report
         uses: anchore/scan-action@v5
+        if: always() # run even if scan fails
         with:
           sbom: "spdx_syft.json"
           severity-cutoff: "low"
