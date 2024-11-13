@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v4
   
       - name: Generate SBOM #syft SBOM generation
-        uses: anchore/sbom-action@v0
+        uses: anchore/sbom-action@v1
         with:
           format: spdx-json
           artifact-name: spdx_syft.json
@@ -21,7 +21,7 @@ jobs:
 
       - name: Scan SBOM #grype scan SBOM
         id: scan
-        uses: anchore/scan-action@v4
+        uses: anchore/scan-action@v5
         with:
           sbom: "spdx_syft.json"
           severity-cutoff: "low"
