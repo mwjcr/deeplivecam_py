@@ -26,6 +26,8 @@ jobs:
           sbom: "spdx_syft.json"
           severity-cutoff: "low"
           output-format: table
+          artifact-name:  grype_syft_report.txt
+          output-file:  "grype_syft_report.txt"
 
       - name: View and Save Scan Report #save scan report to a file
         if: always() # run even if scan fails
