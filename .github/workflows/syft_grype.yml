@@ -27,6 +27,7 @@ jobs:
           severity-cutoff: "low"
 
       - name: Human Readable Scan Report
+        if: always() # run even if scan fails
         run: grype sbom:./spdx_syft.json
 
       - name: View and Save Scan Report #save scan report to a file
