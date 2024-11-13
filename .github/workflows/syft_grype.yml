@@ -25,6 +25,7 @@ jobs:
         with:
           sbom: "spdx_syft.json"
           severity-cutoff: "low"
+          run: grype sbom:./spdx_syft.json
 
       - name: View and Save Scan Report #save scan report to a file
         if: always() # run even if scan fails
