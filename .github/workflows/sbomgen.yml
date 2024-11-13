@@ -17,3 +17,11 @@ jobs:
         
       - name: Read SBOM
         run: cat sbomgen.json
+        
+      - name: Scan SBOM #grype scan SBOM
+        id: scan
+        uses: anchore/scan-action@v5
+        with:
+          sbom: "sbomgen.json"
+          severity-cutoff: "low"
+          output-format: table
