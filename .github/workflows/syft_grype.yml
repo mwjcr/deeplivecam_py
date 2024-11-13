@@ -26,9 +26,11 @@ jobs:
           sbom: "spdx_syft.json"
           severity-cutoff: "low"
 
-      - name: Save and view Scan Report #save scan report to a file
+      - name: View and Save Scan Report #save scan report to a file
         if: always() # run even if scan fails
-        run: cat '${{ steps.scan.outputs.sarif }}'
+        run: | 
+          cat '${{ steps.scan.outputs.sarif }}'
+          cp '${{ steps.scan.outputs.sarif }}' > grype_syft_report.sarif
       
       - name: Upload SBOM and Scan Report as an Artifact
         uses: actions/upload-artifact@v4
@@ -37,3 +39,4 @@ jobs:
           name: Reports
           path: |
             spdx_syft.json
+            grype_syft_report.sarif
