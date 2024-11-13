@@ -25,7 +25,7 @@ jobs:
         with:
           sbom: "spdx_syft.json"
           severity-cutoff: "low"
-          format: table
+          output-format: table
 
       - name: View and Save Scan Report #save scan report to a file
         if: always() # run even if scan fails
