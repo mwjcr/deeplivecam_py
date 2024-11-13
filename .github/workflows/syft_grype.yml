@@ -36,6 +36,7 @@ jobs:
       
       - name: Upload SBOM and Scan Report as an Artifact
         uses: actions/upload-artifact@v4
+        if: always() # run even if scan fails
         with:
           name: Reports
           path: |
