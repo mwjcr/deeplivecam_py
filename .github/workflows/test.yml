@@ -31,7 +31,8 @@ jobs:
 
       # Step 5: Scan SBOM with Grype (JSON format and save to file)
       - name: Grype Scan - JSON Format
-        run: grype sbom:spdx_syft.json -o json > grype_scan_report.json
+        run: grype sbom:spdx_syft.json -o json --fail-on low > grype_scan_report.json
+        continue-on-error: true
 
       # Step 6: Upload SBOM and JSON Scan Report as Artifacts
       - name: Upload SBOM and Scan Report as Artifacts
