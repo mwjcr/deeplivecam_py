@@ -21,45 +21,24 @@ jobs:
       - name: View SBOM
         run: cat "spdx_syft.json"
 
-      # Step 4: Scan SBOM with Grype (Table format)
+      # Step 4: Scan SBOM with Grype (Table format for quick viewing, no artifact saved)
       - name: Grype Scan - Table Format
-        id: grype_scan_table
         uses: anchore/scan-action@v5
         with:
           sbom: "spdx_syft.json"
           severity-cutoff: "low"
           output-format: table
 
-      # Step 5: Save the Table Format Output
-      - name: Save Table Format Output
-        if: always() # Run even if scan fails
-        run: |
-          echo "${{ steps.grype_scan_table.outputs.table }}" > grype_scan_report_table.txt
-          cat grype_scan_report_table.txt
-
-      # Step 6: Scan SBOM with Grype (JSON format)
+      # Step 5: Scan SBOM with Grype (JSON format and save to file)
       - name: Grype Scan - JSON Format
-        id: grype_scan_json
-        uses: anchore/scan-action@v5
-        with:
-          sbom: "spdx_syft.json"
-          severity-cutoff: "low"
-          output-format: json
+        run: grype sbom:spdx_syft.json -o json > grype_scan_report.json
 
-      # Step 7: Save the JSON Format Output
-      - name: Save JSON Format Output
-        if: always() # Run even if scan fails
-        run: |
-          echo "${{ steps.grype_scan_json.outputs.json }}" > grype_scan_report.json
-          cat grype_scan_report.json
-      
-      # Step 8: Upload SBOM and Scan Reports as Artifacts
-      - name: Upload SBOM and Scan Reports as Artifacts
+      # Step 6: Upload SBOM and JSON Scan Report as Artifacts
+      - name: Upload SBOM and Scan Report as Artifacts
         uses: actions/upload-artifact@v4
         if: always() # Run even if scan fails
         with:
           name: Reports
           path: |
             spdx_syft.json
-            grype_scan_report_table.txt
             grype_scan_report.json
