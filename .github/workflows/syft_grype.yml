@@ -9,9 +9,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Step 2: List all files (including the hidden ones)
+      # Step 2: List all files (long listing and hidden)
       - name: List all files
-        run: ls -la
+        run: ls -al
   
       # Step 2: Generate SBOM with Syft
       - name: Generate SBOM
