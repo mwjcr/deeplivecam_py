@@ -16,7 +16,7 @@ jobs:
       # Step 3: Generate SBOM with Syft
       - name: Generate SBOM
         run: |
-         curl -Lo sbom-tool https://github.com/microsoft/sbom-tool/releases/latest/download/sbom-tool-linux-x64
+         wget https://github.com/microsoft/sbom-tool/releases/download/v<VERSION>/sbom-tool-linux-x64
          chmod +x sbom-tool
          sbom-tool generate -b ./usr/local/bin -bc .
           
