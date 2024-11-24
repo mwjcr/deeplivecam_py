@@ -1,10 +1,10 @@
 name: SBOM MS SBOM and Bomber
 on: push
 jobs: 
-   mssbom_bomber:
+  mssbom_bomber:
    runs-on: ubuntu-latest
   
-    steps:
+   steps:
       # Step 1: Checkout branch
       - name: Checkout
         uses: actions/checkout@v4
