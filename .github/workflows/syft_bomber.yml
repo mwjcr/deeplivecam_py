@@ -1,0 +1,45 @@
+name: SBOM Syft and Grype
+on: push
+jobs: 
+  syft_grype:
+    runs-on: ubuntu-latest
+  
+    steps:
+      # Step 1: Checkout branch
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Step 2: List all files (long listing and hidden)
+      - name: List all files
+        run: ls -al
+  
+      # Step 3: Generate SBOM with Syft
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          format: spdx-json
+          artifact-name: spdx_syft.json
+          output-file: "spdx_syft.json"
+
+      # Step 4: View the SBOM for confirmation
+      - name: View SBOM
+        run: cat "spdx_syft.json"
+
+      # Step 5: Install Grype
+      - name: Install Bomber
+        run: |
+          dpkg -i bomber_0.5.1_linux_arm64.deb
+
+      # Step 6: Scan SBOM with  (Table format for quick viewing, no artifact saved)
+      - name: Bomber scan
+        run: bomber scan spdx_syft.json --output=json > bomber_report.json
+
+      # Step 8: Upload SBOM and JSON Scan Report as Artifacts
+      - name: Upload SBOM and Scan Report as Artifacts
+        uses: actions/upload-artifact@v4
+        if: always() # Run even if scan fails
+        with:
+          name: Reports
+          path: |
+            spdx_syft.json
+            bomber_report.json
