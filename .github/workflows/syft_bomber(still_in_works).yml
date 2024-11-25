@@ -1,7 +1,7 @@
 name: SBOM Syft and Bomber
 on: push
 jobs: 
-  syft_grype:
+  syft_bomber:
     runs-on: ubuntu-latest
   
     steps:
