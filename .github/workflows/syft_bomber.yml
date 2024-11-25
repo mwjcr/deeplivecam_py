@@ -27,7 +27,7 @@ jobs:
 
       # Step 5: Install Grype
       - name: Install Bomber
-        run: sudo dpkg -i bomber_0.5.1_linux_arm64.deb
+        run: curl -sSfL https://github.com/devops-kung-fu/bomber/releases/download/v0.5.1/bomber_0.5.1_linux_arm64.deb | sh -s -- -b /usr/local/bin
 
       # Step 6: Scan SBOM with  (Table format for quick viewing, no artifact saved)
       - name: Bomber scan
