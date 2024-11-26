@@ -13,13 +13,11 @@ jobs:
       - name: List all files
         run: ls -al
   
-      # Step 3: Generate SBOM with Syft (CycloneDX format)
+      # Step 3: Install Syft and Generate SBOM with Syft (CycloneDX format)
       - name: Generate SBOM
-        uses: anchore/sbom-action@v0
-        with:
-          format: cyclonedx-json  # Set the SBOM format to CycloneDX JSON
-          artifact-name: cyclonedx_syft.json
-          output-file: "cyclonedx_syft.json"
+        run: |
+         curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+         syft deeplivecam_fyp -o cyclonedx-json
 
       # Step 4: View the SBOM for confirmation
       - name: View SBOM
@@ -27,8 +25,7 @@ jobs:
 
       # Step 5: Install Grype
       - name: Install Grype
-        run: |
-          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+        run: curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
 
       # Step 6: Scan SBOM with Grype (Table format for quick viewing, no artifact saved)
       - name: Grype Scan - Table Format
