@@ -37,6 +37,7 @@ jobs:
           sbom: "spdx_syft.json"
           severity-cutoff: "low"
           output-format: table
+          by-cve: true
         continue-on-error: true  # Allows workflow to proceed to the next step even if this one fails
 
       # Step 7: Scan SBOM with Grype (JSON format and save to file)
