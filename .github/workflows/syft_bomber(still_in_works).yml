@@ -25,20 +25,17 @@ jobs:
       - name: View SBOM
         run: cat "spdx_syft.json"
 
-      # Step 5: Install Grype
+      # Step 5: Install Bomber
       - name: Install Bomber
-        #run: sudo dpkg -i https://github.com/devops-kung-fu/bomber/releases/download/v0.5.1/bomber_0.5.1_linux_amd64.deb
         run: |
           wget https://github.com/devops-kung-fu/bomber/releases/download/v0.5.1/bomber_0.5.1_linux_amd64.deb -O bomber.deb
           sudo dpkg -i bomber.deb
     
 
-      # Step 6: Scan SBOM with  (Table format for quick viewing, no artifact saved)
+      # Step 6: Scan SBOM with Bomber
       - name: Bomber scan
-        #run: bomber scan spdx_syft.json --output=json > bomber_report.json
         run: |
-          bomber scan spdx_syft.json --format table
-          bomber scan spdx_syft.json --format table > bomber_report.txt
+          bomber scan spdx_syft.json
           
 
       # Step 8: Upload SBOM and JSON Scan Report as Artifacts
@@ -49,4 +46,3 @@ jobs:
           name: Reports
           path: |
             spdx_syft.json
-            bomber_report.json
