@@ -35,7 +35,11 @@ jobs:
 
       # Step 6: Scan SBOM with  (Table format for quick viewing, no artifact saved)
       - name: Bomber scan
-        run: bomber scan spdx_syft.json --output=json > bomber_report.json
+        #run: bomber scan spdx_syft.json --output=json > bomber_report.json
+        run: |
+          bomber scan spdx_syft.json --format table
+          bomber scan spdx_syft.json --format table > bomber_report.txt
+          
 
       # Step 8: Upload SBOM and JSON Scan Report as Artifacts
       - name: Upload SBOM and Scan Report as Artifacts
