@@ -5,34 +5,35 @@ jobs:
     runs-on: ubuntu-latest
   
     steps:
-      # Step 1: Checkout branch
+      # Step 1: Checkout repo so workflow can access
       - name: Checkout
         uses: actions/checkout@v4
 
       # Step 2: List all files (long listing and hidden)
       - name: List all files
         run: ls -al
-  
-      # Step 3: Generate SBOM with Syft
-      - name: Generate SBOM
-        uses: anchore/sbom-action@v0
-        with:
-          format: spdx-json
-          artifact-name: spdx_syft.json
-          output-file: "spdx_syft.json"
 
-      # Step 4: View the SBOM for confirmation
+      # Step 3: Install Syft
+      - name: Install Syft
+        run: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+  
+      # Step 4: Generate SBOM with Syft (SPDX format)
+      - name: Generate SBOM
+        run: syft . -o spdx-json > spdx_syft.json
+        continue-on-error: true
+
+      # Step 5: View the SBOM for confirmation
       - name: View SBOM
         run: cat "spdx_syft.json"
 
-      # Step 5: Install Bomber
+      # Step 6: Install Bomber
       - name: Install Bomber
         run: |
           wget https://github.com/devops-kung-fu/bomber/releases/download/v0.5.1/bomber_0.5.1_linux_amd64.deb -O bomber.deb
           sudo dpkg -i bomber.deb
     
 
-      # Step 6: Scan SBOM with Bomber
+      # Step 7: Scan SBOM with Bomber
       - name: Bomber scan
         run: |
           bomber scan spdx_syft.json
