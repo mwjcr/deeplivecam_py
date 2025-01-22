@@ -32,13 +32,8 @@ jobs:
           
       # Step 6: Scan SBOM with Grype (Table format for quick viewing, no artifact saved)
       - name: Grype Scan - Table Format
-        uses: anchore/scan-action@v5
-        with:
-          sbom: "cyclonedx_syft.json"  # Use the CycloneDX SBOM generated above
-          severity-cutoff: "low"
-          output-format: table
-          # by-cve: true
-        continue-on-error: true  # Allows workflow to proceed to the next step even if this one fails
+        run: grype sbom:cyclonedx_syft.json -o table --fail-on low
+        continue-on-error: true
 
       # Step 7: Scan SBOM with Grype (JSON format and save to file)
       - name: Grype Scan - JSON Format
