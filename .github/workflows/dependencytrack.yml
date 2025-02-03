@@ -17,8 +17,8 @@ jobs:
       
       - name: Post SBOM to Dependency-Track
         run: |
-          response=$(curl --location '${{ secrets.http://localhost:8080 }}' \
-          --header 'X-Api-Key: ${{ secrets.odt_EHihK4IBTrI2KscqcHxxQbUIwnQqxAFV }}' \
-          --form 'project="${{ secrets.873c4566-5131-4e68-b91d-a05ede8c3d71 }}"' \
-          --form 'bom=@cyclonedx_syft.json')
+          response=$(curl --location '${{ secrets.API_URL }}' \
+          --header 'X-Api-Key: ${{ secrets.API_KEY }}' \
+          --form 'project="${{ secrets.PROJECT_ID }}"' \
+          --form 'bom=@SBOM.json')
           echo "Response from curl= $response"
