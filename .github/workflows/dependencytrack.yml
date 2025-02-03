@@ -17,7 +17,7 @@ jobs:
       
       - name: Post SBOM to Dependency-Track
         run: |
-          response=$(curl --location '${{ http://localhost:8080 }}' \
+          response=$(curl --location '${{ localhost:8080 }}' \
           --header 'X-Api-Key: ${{ odt_EHihK4IBTrI2KscqcHxxQbUIwnQqxAFV }}' \
           --form 'project="${{ 873c4566-5131-4e68-b91d-a05ede8c3d71 }}"' \
           --form 'bom=@cyclonedx_syft.json')
