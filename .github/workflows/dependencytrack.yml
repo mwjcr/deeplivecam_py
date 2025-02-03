@@ -1,4 +1,4 @@
-name: SBOM CycloneDX and Grype
+name: SBOM CycloneDX and Depedency track
 on: push
 jobs: 
   syft_grype:
