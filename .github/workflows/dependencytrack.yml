@@ -20,5 +20,5 @@ jobs:
           response=$(curl --location '${{ secrets.API_URL }}' \
           --header 'X-Api-Key: ${{ secrets.API_KEY }}' \
           --form 'project="${{ secrets.PROJECT_ID }}"' \
-          --form 'bom=@SBOM.json')
+          --form 'bom=@cyclonedx_syft.json')
           echo "Response from curl= $response"
