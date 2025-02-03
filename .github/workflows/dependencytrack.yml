@@ -1,0 +1,24 @@
+name: SBOM CycloneDX and Grype
+on: push
+jobs: 
+  syft_grype:
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Syft
+        run: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+  
+      - name: Generate SBOM
+        run: syft . -o cyclonedx-json > cyclonedx_syft.json
+        continue-on-error: true
+      
+      - name: Post SBOM to Dependency-Track
+        run: |
+          response=$(curl --location '${{ http://localhost:8080 }}' \
+          --header 'X-Api-Key: ${{ odt_EHihK4IBTrI2KscqcHxxQbUIwnQqxAFV }}' \
+          --form 'project="${{ 873c4566-5131-4e68-b91d-a05ede8c3d71 }}"' \
+          --form 'bom=@cyclonedx_syft.json')
+          echo "Response from curl= $response"
