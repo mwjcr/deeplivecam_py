@@ -1,9 +1,5 @@
-name: SBOM CycloneDX and Dependency Track
-on:
-  push:
-    branches:
-      - main
-
+name: SBOM CycloneDX and Depedency track
+on: push
 jobs: 
   syft_dependencytrack:
     runs-on: ubuntu-latest
