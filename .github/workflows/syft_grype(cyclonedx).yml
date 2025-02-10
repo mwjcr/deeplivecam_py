@@ -1,7 +1,11 @@
-name: SBOM CycloneDX and Grype
-on: push
+name: SBOM CycloneDX and Dependency Track
+on:
+  push:
+    branches:
+      - main
+
 jobs: 
-  syft_grype:
+  syft_dependencytrack:
     runs-on: ubuntu-latest
   
     steps:
