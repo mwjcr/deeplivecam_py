@@ -5,7 +5,7 @@ on:
       - main
 
 jobs: 
-  syft_dependencytrack:
+  syft_grype(cyclonedx):
     runs-on: ubuntu-latest
   
     steps:
