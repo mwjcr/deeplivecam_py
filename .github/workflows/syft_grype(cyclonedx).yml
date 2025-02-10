@@ -1,4 +1,4 @@
-name: SBOM CycloneDX and Dependency Track
+name: SBOM CycloneDX and Grype
 on:
   push:
     branches:
