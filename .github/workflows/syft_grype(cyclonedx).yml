@@ -5,7 +5,7 @@ on:
       - main
 
 jobs: 
-  syft_grype(cyclonedx):
+  syft_grype_CDX:
     runs-on: ubuntu-latest
   
     steps:
