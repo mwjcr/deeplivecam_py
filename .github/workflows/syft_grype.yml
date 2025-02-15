@@ -40,7 +40,6 @@ jobs:
       # Step 9: Upload SBOM and JSON Scan Report as Artifacts
       - name: Upload SBOM and Scan Report as Artifacts
         uses: actions/upload-artifact@v4
-        if: always() # Run even if scan fails
         with:
           name: Reports
           path: |
