@@ -17,7 +17,6 @@ jobs:
   
       - name: Generate SBOM
         run: syft . -o cyclonedx-json > cyclonedx_syft.json
-        continue-on-error: true
       
       - name: Post SBOM to Dependency-Track
         run: |
