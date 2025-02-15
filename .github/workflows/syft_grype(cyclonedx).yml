@@ -24,7 +24,6 @@ jobs:
       # Step 4: Generate SBOM with Syft (CycloneDX format)
       - name: Generate SBOM
         run: syft . -o cyclonedx-json > cyclonedx_syft.json
-        continue-on-error: true
 
       # Step 5: View the SBOM for confirmation
       - name: View SBOM
@@ -36,18 +35,15 @@ jobs:
           
       # Step 7: Scan SBOM with Grype (Table format for quick viewing, no artifact saved)
       - name: Grype Scan - Table Format
-        run: grype sbom:cyclonedx_syft.json -o table --fail-on low
-        continue-on-error: true
+        run: grype sbom:cyclonedx_syft.json -o table
 
       # Step 8: Scan SBOM with Grype (JSON format and save to file)
       - name: Grype Scan - JSON Format
-        run: grype sbom:cyclonedx_syft.json -o json --fail-on low > grype_scan_report.json
-        continue-on-error: true
+        run: grype sbom:cyclonedx_syft.json -o json > grype_scan_report.json
 
       # Step 9: Upload SBOM and JSON Scan Report as Artifacts
       - name: Upload SBOM and Scan Report as Artifacts
         uses: actions/upload-artifact@v4
-        if: always() # Run even if scan fails
         with:
           name: Reports
           path: |
