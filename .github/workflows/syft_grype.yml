@@ -32,8 +32,8 @@ jobs:
           
       # Step 7: Scan SBOM with Grype (Table format for quick viewing, no artifact saved)
       - name: Grype Scan - Table Format
-        run: grype sbom:spdx_syft.json -o table --fail-on low
-        continue-on-error: true
+        run: grype sbom:spdx_syft.json -o table
+        #continue-on-error: true
 
       # Step 8: Scan SBOM with Grype (JSON format and save to file)
       - name: Grype Scan - JSON Format
